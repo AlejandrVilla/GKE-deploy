@@ -1,0 +1,41 @@
+name: Deployment
+
+# eventos
+on:
+  push:
+    branches:
+      - main
+
+# jobs en el flujo de trabajo
+jobs:
+  build-app:
+    # entorno
+    runs-on: ubuntu-latest
+
+    # pasos
+    steps:
+    - name: Checkout of source code
+      uses: actions/checkout@v2
+
+    - name: Set up kubectl
+      uses: azure/setup-kubectl@v1
+      with:
+        kubeconfig: ${{ secrets.KUBE_CONFIG }}
+
+    - name: Validate Deployment
+      run: kubectl get pods
+
+    # - name: Check versions
+    #   run: bash pre-init.sh
+      
+    # - name: config
+    #   run: bash config.sh
+
+    # - name: Clean
+    #   run: bash pre-build.sh
+
+    # - name: Build and push
+    #   run: bash docker-build-push.sh
+
+    #- name: destroy
+    # run: destroy.sh
