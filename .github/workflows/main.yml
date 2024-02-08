@@ -18,14 +18,14 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Set up kubectl
-      uses: AlejandrVilla/GKE-deploy@main
+      uses: ameydev/gke-kubectl-action@master
       env:
         PROJECT_ID: ${{ secrets.PROJECT_ID }}
         APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
         CLUSTER_NAME: ${{ secrets.GKE_CLUSTER_NAME }}
         ZONE_NAME: us-central1-c
-      # with:
-      #   args: apply -f packaging/k8s/manifests/ -n prod
+      with:
+        args: apply -f packaging/k8s/manifests/ -n prod
 
     - name: Validate Deployment
       run: kubectl get pods
