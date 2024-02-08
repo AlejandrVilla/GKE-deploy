@@ -7,24 +7,29 @@ on:
       - main
 
 jobs:
-  job_id:
+  build:
+    runs-on: ubuntu-latest
+
     permissions:
       contents: 'read'
       id-token: 'write'
 
     steps:
-    - id: 'auth'
+    - name: Authenticate
+      id: 'auth'
       uses: 'google-github-actions/auth@v2'
       with:
         workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
         service_account: 'my-service-account@my-project.iam.gserviceaccount.com'
 
-    - id: 'get-credentials'
+    - name: Get GKE Credentials
+      id: 'get-credentials'
       uses: 'google-github-actions/get-gke-credentials@v2'
       with:
         cluster_name: 'my-cluster'
         location: 'us-central1-a'
 
     # The KUBECONFIG env var is automatically exported and picked up by kubectl.
-    - id: 'get-pods'
+    - name: Get Pods
+      id: 'get-pods'
       run: 'kubectl get pods'
