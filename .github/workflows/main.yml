@@ -1,19 +1,46 @@
-name: Deploy App on GKE cluster.
+name: Deployment
+
+# eventos
 on:
   push:
     branches:
       - main
+
+# jobs en el flujo de trabajo
 jobs:
-  build:
+  build-app:
+    # entorno
     runs-on: ubuntu-latest
+
+    # pasos
     steps:
-    - uses: actions/checkout@master
-    - name: kubectl - Google Cloud GKE cluster.
+    - name: Checkout of source code
+      uses: actions/checkout@v2
+
+    - name: Set up kubectl
       uses: ameydev/gke-kubectl-action@master
       env:
         PROJECT_ID: ${{ secrets.PROJECT_ID }}
         APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
         CLUSTER_NAME: ${{ secrets.GKE_CLUSTER_NAME }}
-        ZONE_NAME: us-central1-a
+        ZONE_NAME: 	us-central1-a
       with:
-        args: apply -f packaging/k8s/manifests/ -n staging
+        args: apply -f packaging/k8s/manifests/ -n prod
+
+    - name: Validate Deployment
+      run: kubectl get pods
+
+    # - name: Check versions
+    #   run: bash pre-init.sh
+      
+    # - name: config
+    #   run: bash config.sh
+
+    # - name: Clean
+    #   run: bash pre-build.sh
+
+    # - name: Build and push
+    #   run: bash docker-build-push.sh
+
+    #- name: destroy
+    # run: destroy.sh
