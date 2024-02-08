@@ -29,9 +29,13 @@ jobs:
 
     - name: Validate Deployment
       run: kubectl config current-context
-      run: kubectl cluster-info
+    - name: Validate Deployment 2
+      run: kubectl cluster-info 
+    - name: Validate Deployment 3
       run: kubectl config view
+    - name: Validate Deployment 4
       run: kubectl get nodes
+    - name: Validate Deployment 5
       run: kubectl get pods
 
     # - name: Check versions
