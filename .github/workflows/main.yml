@@ -18,7 +18,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Set up kubectl
-      uses: AlejandrVilla/KGE-deploy@main
+      uses: AlejandrVilla/GKE-deploy@main
       env:
         PROJECT_ID: ${{ secrets.PROJECT_ID }}
         APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
