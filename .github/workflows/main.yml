@@ -28,6 +28,10 @@ jobs:
         # args: apply -f packaging/k8s/manifests/ -n prod
 
     - name: Validate Deployment
+      run: kubectl config current-context
+      run: kubectl cluster-info
+      run: kubectl config view
+      run: kubectl get nodes
       run: kubectl get pods
 
     # - name: Check versions
